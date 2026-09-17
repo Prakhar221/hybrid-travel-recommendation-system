@@ -1,0 +1,20 @@
+business_id,name,address,city,state,postal_code,latitude,longitude,stars,review_count,is_open,categories,price_range,attributes
+Pns2l4eNsfO8kk83dixA6A,"Abby Rappoport, LAC, CMQ","1616 Chapala St, Ste 2",Santa Barbara,CA,93101,34.426679,-119.711197,5.0,7,0,"Doctors, Traditional Chinese Medicine, Naturopathic, Health & Medical",2,"{'ByAppointmentOnly': 'True', 'RestaurantsPriceRange2': '2'}"
+LosAgaves_SB_01,Los Agaves,600 N Milpas St,Santa Barbara,CA,93103,34.4258,-119.6872,4.5,3834,1,"Mexican, Restaurants, Fast Food",2,"{'GoodForKids': 'True', 'RestaurantsPriceRange2': '2', 'RestaurantsDelivery': 'True'}"
+MesaVerde_SB_02,Mesa Verde,1919 Cliff Dr,Santa Barbara,CA,93109,34.4024,-119.7231,4.5,1796,1,"Vegan, Vegetarian, Restaurants, Gluten-Free",2,"{'GoodForKids': 'True', 'RestaurantsPriceRange2': '2', 'OutdoorSeating': 'True'}"
+PalaceGrill_SB_03,The Palace Grill,8 E Cota St,Santa Barbara,CA,93101,34.4178,-119.6975,4.5,1500,1,"Cajun/Creole, Southern, Restaurants, Seafood",3,"{'GoodForKids': 'True', 'RestaurantsPriceRange2': '3', 'Alcohol': 'full_bar'}"
+LureFishHouse_SB_04,Lure Fish House,"3815 State St, Ste A",Santa Barbara,CA,93105,34.4372,-119.7245,4.5,1453,1,"Seafood, Seafood Markets, Restaurants, Bars",3,"{'GoodForKids': 'True', 'RestaurantsPriceRange2': '3', 'Alcohol': 'full_bar'}"
+LillysTacos_SB_05,Lilly's Tacos,310 Chapala St,Santa Barbara,CA,93101,34.415,-119.6965,4.5,1219,1,"Mexican, Tacos, Restaurants",1,"{'GoodForKids': 'True', 'RestaurantsPriceRange2': '1'}"
+PicklesSwiss_SB_06,Pickles & Swiss,"811 State St, Unit E",Santa Barbara,CA,93101,34.4205,-119.702,4.5,1213,1,"Sandwiches, Delis, Restaurants, Fast Food",2,"{'GoodForKids': 'True', 'RestaurantsPriceRange2': '2'}"
+TomaRestaurant_SB_07,Toma Restaurant & Bar,324 West Cabrillo Blvd,Santa Barbara,CA,93101,34.4095,-119.692,4.5,1084,1,"Italian, Seafood, Bars, Restaurants",3,"{'GoodForKids': 'True', 'RestaurantsPriceRange2': '3', 'Alcohol': 'full_bar'}"
+NDwoKO79_T49UEKVDlHd3A,Sustainable Wine Tours,100 State St,Santa Barbara,CA,93101,34.4208,-119.6982,5.0,180,1,"Tours, Wineries, Wine Tours, Travel & Transportation, Active Life",3,{'RestaurantsPriceRange2': '3'}
+QNilrbTi8912ye2ztnBMpA,DeeTours of Santa Barbara,200 E Beach St,Santa Barbara,CA,93101,34.4215,-119.7011,5.0,95,1,"Tours, Sightseeing Tours, Travel & Transportation, Active Life",2,{'RestaurantsPriceRange2': '2'}
+MTSW4McQd7CbVtyjqoe9mw,St Honore Pastries,935 Race St,Philadelphia,PA,19107,39.955505,-75.155564,4.0,80,1,"Restaurants, Food, Bubble Tea, Coffee & Tea, Bakeries",1,"{'RestaurantsDelivery': 'False', 'OutdoorSeating': 'False', 'RestaurantsPriceRange2': '1'}"
+PhoStreet_PHL_01,Pho Street,1001 Market St,Philadelphia,PA,19107,39.9526,-75.1652,4.0,150,1,"Vietnamese, Restaurants, Asian Fusion, Noodles",1,{'RestaurantsPriceRange2': '1'}
+TunaBar_PHL_02,Tuna Bar,205 Arch St,Philadelphia,PA,19106,39.9531,-75.1436,4.5,320,1,"Sushi Bars, Japanese, Seafood, Restaurants, Bars",3,"{'RestaurantsPriceRange2': '3', 'Alcohol': 'full_bar'}"
+OSushi_PHL_03,O Sushi Restaurant,600 Spruce St,Philadelphia,PA,19106,39.952,-75.151,4.5,199,1,"Sushi Bars, Japanese, Restaurants",2,{'RestaurantsPriceRange2': '2'}
+YnGlopjmCYM6Pw07qt9bfw,Mio's Grill & Cafe,125 S 4th St,Philadelphia,PA,19106,39.9525,-75.1635,4.5,230,1,"Mediterranean, Turkish, Greek, Restaurants",2,{'RestaurantsPriceRange2': '2'}
+B2Tuf5M1wQhdwAKnD-w7Yw,New Orleans Airboat Tours,450 Canal St,New Orleans,LA,70130,29.9511,-90.0715,5.0,210,1,"Tours, Airboat Tours, Travel & Transportation, Active Life",3,{'RestaurantsPriceRange2': '3'}
+TDEV16C4GhK5wyhL-5V7ww,Flambeaux Bicycle Tours,626 Frenchmen St,New Orleans,LA,70116,29.958,-90.065,5.0,140,1,"Tours, Bike Tours, Travel & Transportation, Active Life",2,{'RestaurantsPriceRange2': '2'}
+ez4kMLP6OJEIaMbMrrGRdA,New Orleans Secrets Tours,700 Royal St,New Orleans,LA,70116,29.962,-90.061,5.0,165,1,"Tours, Walking Tours, Travel & Transportation, Active Life",2,{'RestaurantsPriceRange2': '2'}
+bBDDEgkFA1Otx9Lfe7BZUQ,Sonic Drive-In,2312 Dickerson Pike,Nashville,TN,37207,36.208102,-86.76817,1.5,10,1,"Fast Food, Restaurants, Burgers",1,"{'Alcohol_no': '1', 'RestaurantsPriceRange2': '1'}"
