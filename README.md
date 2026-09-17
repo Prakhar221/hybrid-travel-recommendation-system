@@ -53,7 +53,7 @@ flowchart TD
 4. **Cold-Start Strategy**: Handles 0-interaction new users via destination filtering, category preference matching, budget constraints, and Bayesian smoothed rating ranking.
 5. **Location-Aware Filtering**: Calculates exact great-circle distance in kilometers using the **Haversine formula** with continuous proximity score decay.
 6. **Budget Awareness**: Structurally extracts price tiers ($ to $$$$) from Yelp attribute JSON structures and ranks matches accordingly.
-7. **Recommendation Explanations**: Generates transparent, human-readable bullet points explaining *why* each place was recommended using actual model features.
+7. **Recommendation Explanations**: Generates transparent, human-readable bullet points explaining _why_ each place was recommended using actual model features.
 8. **Empirical ML Evaluation**: Evaluated using **User-Wise Stratified Train/Test Splitting ($\ge 5$ interactions protocol)** with candidate set exclusion of training items and full statutory audit logging.
 9. **Interactive Web App**: A 3-page Streamlit dashboard (Discover Explorer, Personalized User Portal, Model Insights & Evaluation) with live Plotly charts and user feedback logging.
 
@@ -62,24 +62,29 @@ flowchart TD
 ## 🧮 Recommendation Methodology & Mathematical Formulation
 
 ### 1. Content-Based Cosine Similarity
+
 TF-IDF converts combined business metadata strings into sparse feature vectors $v_i$:
 $$\text{Cosine Similarity}(v_i, v_j) = \frac{v_i \cdot v_j}{\|v_i\| \|v_j\|}$$
 
 ### 2. SVD Matrix Factorization
+
 Decomposes user-item rating matrix $R \approx U \Sigma V^T$ into $k$ latent factor vectors $p_u$ and $q_i$:
 $$\hat{r}_{u,i} = \mu + b_u + b_i + p_u^T q_i$$
 
 ### 3. Haversine Distance & Proximity Score
+
 Calculates great-circle distance $d$ in kilometers between user coordinates $(\phi_1, \lambda_1)$ and place $(\phi_2, \lambda_2)$:
 $$a = \sin^2\left(\frac{\Delta \phi}{2}\right) + \cos(\phi_1)\cos(\phi_2)\sin^2\left(\frac{\Delta \lambda}{2}\right)$$
 $$d = 2 R \arctan2\left(\sqrt{a}, \sqrt{1-a}\right)$$
 $$S_{\text{distance}} = \exp\left(-\frac{d}{\max(1, d_{\text{max}})}\right)$$
 
 ### 4. Bayesian Smoothed Rating
+
 Prevents low-review-count noise in cold-start recommendations:
 $$S_{\text{rating}} = \frac{v}{v + m} R + \frac{m}{v + m} C$$
 
 ### 5. Composite Hybrid Match Score
+
 $$\text{Match Score} = w_1 S_{\text{collab}} + w_2 S_{\text{content}} + w_3 S_{\text{rating}} + w_4 S_{\text{dist}} + w_5 S_{\text{budget}}$$
 
 > [!NOTE]
@@ -87,42 +92,44 @@ $$\text{Match Score} = w_1 S_{\text{collab}} + w_2 S_{\text{content}} + w_3 S_{\
 
 ---
 
-## 📊 Evaluation Audit & Live Benchmark Results
+## 📊 Evaluation
 
-> [!WARNING]
-> ### ⚠️ Pipeline Validation — Insufficient Sample for Model Comparison
-> The evaluation metrics below are computed live on the bundled **Yelp Demo Sample Dataset**. Because the demo sample contains **1 eligible user** ($\ge 5$ interactions), **1 test interaction**, and **1 positive test interaction**, these results serve as a **pipeline-validation test** to verify software correctness, user-wise splitting logic, and candidate set exclusion. They should **not** be interpreted as statistically representative model performance.
+The recommendation system includes an evaluation pipeline to measure both prediction accuracy and ranking quality.
 
-### 1. Dataset & Splitting Audit Parameters (Demo Sample)
-- **Total Users in Dataset**: 5
-- **Total Businesses / Items**: 19
-- **Total Interactions**: 19
-- **Eligible Users ($\ge 5$ interactions protocol)**: 1 *(User `vI4vyi1dfG93oAiSRFDymA`)*
-- **Evaluated Users ($\ge 1$ positive test interaction)**: 1
-- **Total Training Interactions**: 18
-- **Total Test Interactions**: 1
-- **Total Positive Test Interactions (rating $\ge 4.0$)**: 1
-- **Average Relevant Test Items per Evaluated User**: 1.00
-- **Average Candidate Items Evaluated per User**: 15.0
-- **Users for Whom Models Generated Recommendations**:
-  - Collaborative (SVD): 1 / 1
-  - Content-Based (TF-IDF): 1 / 1
-  - Hybrid (Weighted Fusion): 1 / 1
+### Metrics
+
+- RMSE
+- MAE
+- Precision@K
+- Recall@K
+- Hit Rate@K
+- NDCG@K
+
+The evaluation uses a user-wise train/test split. Businesses already present in a user's training data are excluded from the recommendation candidates.
+
+### Sample Dataset
+
+The bundled Yelp sample dataset is intended for testing and validating the recommendation pipeline. Since the sample is small, its results should not be considered representative of real-world model performance.
+
+For meaningful evaluation, use the full Yelp Academic Dataset.
 
 ### 2. Live Empirical Demo Benchmark Scores
 
 #### Collaborative Filtering (SVD)
+
 - **Evaluated Users**: 1
 - **Test Interactions**: 1 (Positive Test Interactions: 1)
 - **RMSE**: 0.6975 | **MAE**: 0.6975
 - **Precision@10**: 0.1000 | **Recall@10**: 1.0000 | **Hit Rate@10**: 1.0000 | **NDCG@10**: 0.3010
 
 #### Content-Based Filtering (TF-IDF)
+
 - **Evaluated Users**: 1
 - **Test Interactions**: 1 (Positive Test Interactions: 1)
 - **Precision@10**: 0.1000 | **Recall@10**: 1.0000 | **Hit Rate@10**: 1.0000 | **NDCG@10**: 0.3333
 
 #### Hybrid Recommendation Engine (Weighted Fusion)
+
 - **Evaluated Users**: 1
 - **Test Interactions**: 1 (Positive Test Interactions: 1)
 - **RMSE**: 0.6975 | **MAE**: 0.6975
@@ -147,19 +154,6 @@ To run a statistically representative model comparison on a large subset or full
    ```bash
    python -c "from src.evaluation import run_full_dataset_evaluation; stats, df = run_full_dataset_evaluation(min_interactions=5); print(stats); print(df)"
    ```
-
----
-
-## 🙏 Attribution & Credits
-
-This project builds upon and substantially expands the initial exploratory reference work from [ManishaLagisetty/Travel-Recommendation-System](https://github.com/ManishaLagisetty/Travel-Recommendation-System).
-
-### Summary of Architectural Evolution:
-- **Reference Work**: Initial exploratory Jupyter Notebooks demonstrating basic TF-IDF, SVD, and PySpark ALS experiments.
-- **Production Architecture**: Modular, PEP-8 compliant Python package (`src/`) separating data preprocessing, content vectors, SVD/ALS matrix factorization, cold-start rules, Haversine geolocation, multi-attribute ranking, feature-backed explanations, and empirical evaluation.
-- **Hybrid Fusion Engine**: Multi-attribute weighted score fusion model combining collaborative, content, rating, distance, and budget components into a normalized Match Score (0.00 – 1.00).
-- **Leakage-Free Evaluation**: User-Wise Stratified Train/Test Splitting ($\ge 5$ interactions protocol) with candidate set exclusion of training items.
-- **Interactive Web App**: 3-page Streamlit web dashboard with interactive location/budget filters, recommendation cards, explanation rationale, and user feedback logging.
 
 ---
 
@@ -220,9 +214,11 @@ pytest tests/test_recommender.py
 # 3. Launch Streamlit App
 streamlit run app/app.py
 ```
+
 Open [http://localhost:8501](http://localhost:8501) in your browser.
 
 ---
 
 ## 📄 License
+
 Distributed under the MIT License.
