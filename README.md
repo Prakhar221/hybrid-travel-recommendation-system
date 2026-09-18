@@ -1,11 +1,6 @@
-# Hybrid Travel Recommendation Platform ✈️
+# Hybrid Travel Recommendation Platform
 
-[![Python 3.11](https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
-[![Streamlit](https://img.shields.io/badge/Streamlit-1.25+-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://streamlit.io/)
-[![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-1.2+-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
-
-An end-to-end, portfolio-ready **Hybrid Travel Recommendation Platform** built on the Yelp Academic Dataset. It integrates **Content-Based Filtering (TF-IDF)**, **Collaborative Filtering (SVD Matrix Factorization)**, **Cold-Start Bayesian Preference Matching**, **Haversine Geolocation Distance**, and **Budget-Aware Multi-Attribute Ranking** into a unified, explainable recommendation engine and interactive Streamlit web application.
+A Python recommendation system built around the Yelp Academic Dataset. It combines content-based filtering, collaborative filtering, explicit preference matching for new users, geographic distance, ratings, and budget signals in an explainable ranking pipeline. A Streamlit application provides an interactive way to explore the bundled sample data.
 
 ---
 
@@ -38,7 +33,7 @@ flowchart TD
 
     subgraph Evaluation & Delivery
         RANK --> EVAL[src/evaluation.py\nUser-Wise Split & Full Dataset Evaluation]
-        RANK --> APP[app/app.py\nStreamlit 3-Page Web Application]
+        RANK --> APP[app/app.py\nStreamlit Web Application]
         APP --> FEEDBACK[Local Interaction Logger]
     end
 ```
@@ -47,15 +42,15 @@ flowchart TD
 
 ## ✨ Key Features
 
-1. **Content-Based Filtering**: TF-IDF vectorization over normalized item text (`name`, `categories`, `city`, `state`, `attributes`) paired with cosine similarity score computation.
-2. **Collaborative Filtering**: Singular Value Decomposition (SVD) matrix factorization capturing latent user-item interaction preferences.
-3. **Hybrid Recommendation Engine**: Configurable weighted score fusion combining collaborative, content, rating, location, and budget components into a single **Match Score (0.00 – 1.00)**.
-4. **Cold-Start Strategy**: Handles 0-interaction new users via destination filtering, category preference matching, budget constraints, and Bayesian smoothed rating ranking.
-5. **Location-Aware Filtering**: Calculates exact great-circle distance in kilometers using the **Haversine formula** with continuous proximity score decay.
-6. **Budget Awareness**: Structurally extracts price tiers ($ to $$$$) from Yelp attribute JSON structures and ranks matches accordingly.
-7. **Recommendation Explanations**: Generates transparent, human-readable bullet points explaining _why_ each place was recommended using actual model features.
-8. **Empirical ML Evaluation**: Evaluated using **User-Wise Stratified Train/Test Splitting ($\ge 5$ interactions protocol)** with candidate set exclusion of training items and full statutory audit logging.
-9. **Interactive Web App**: A 3-page Streamlit dashboard (Discover Explorer, Personalized User Portal, Model Insights & Evaluation) with live Plotly charts and user feedback logging.
+1. **Content-Based Filtering**: TF-IDF vectorization over normalized business text and cosine similarity.
+2. **Collaborative Filtering**: SVD matrix factorization over user-business ratings.
+3. **Hybrid Recommendation Engine**: Configurable weighted fusion of collaborative, content, rating, distance, and budget signals.
+4. **Cold-Start Recommendations**: Filters by destination, categories, rating, budget, and distance, then ranks with Bayesian-smoothed ratings.
+5. **Location Awareness**: Calculates great-circle distance in kilometers with the Haversine formula and exponential proximity decay.
+6. **Budget Awareness**: Extracts Yelp price tiers from business attributes and applies a budget filter and score.
+7. **Recommendation Explanations**: Produces human-readable reasons from ratings, categories, distance, budget, and collaborative signals.
+8. **Evaluation Utilities**: Provides user-wise train/test splitting and RMSE, MAE, Precision@K, Recall@K, Hit Rate@K, and NDCG@K calculations.
+9. **Interactive Web App**: Includes Discover & Filter, Personalized Portal, and Model Insights & Evaluation views, plus local like/dislike logging.
 
 ---
 
@@ -92,10 +87,9 @@ $$\text{Match Score} = w_1 S_{\text{collab}} + w_2 S_{\text{content}} + w_3 S_{\
 
 ---
 
-## 📊 Evaluation
+## Evaluation
 
-
-The recommendation system includes an evaluation pipeline to measure both prediction accuracy and ranking quality.
+The evaluation pipeline measures prediction accuracy and ranking quality on a user-wise train/test split.
 
 ### Metrics
 
@@ -105,7 +99,8 @@ The recommendation system includes an evaluation pipeline to measure both predic
 - Recall@K
 - Hit Rate@K
 - NDCG@K
-The evaluation uses a user-wise train/test split. Businesses already present in a user's training data are excluded from the recommendation candidates.
+
+Users with at least five interactions can contribute held-out test interactions. Users below that threshold remain in the training set. Items seen in a user's training interactions are excluded from that user's recommendation candidates.
 
 ### Sample Dataset
 
@@ -113,33 +108,13 @@ The bundled Yelp sample dataset is intended for testing and validating the recom
 
 For meaningful evaluation, use the full Yelp Academic Dataset.
 
-### 2. Live Empirical Demo Benchmark Scores
-
-#### Collaborative Filtering (SVD)
-
-- **Evaluated Users**: 1
-- **Test Interactions**: 1 (Positive Test Interactions: 1)
-- **RMSE**: 0.6975 | **MAE**: 0.6975
-- **Precision@10**: 0.1000 | **Recall@10**: 1.0000 | **Hit Rate@10**: 1.0000 | **NDCG@10**: 0.3010
-
-#### Content-Based Filtering (TF-IDF)
-
-- **Evaluated Users**: 1
-- **Test Interactions**: 1 (Positive Test Interactions: 1)
-- **Precision@10**: 0.1000 | **Recall@10**: 1.0000 | **Hit Rate@10**: 1.0000 | **NDCG@10**: 0.3333
-
-#### Hybrid Recommendation Engine (Weighted Fusion)
-
-- **Evaluated Users**: 1
-- **Test Interactions**: 1 (Positive Test Interactions: 1)
-- **RMSE**: 0.6975 | **MAE**: 0.6975
-- **Precision@10**: 0.0000 | **Recall@10**: 0.0000 | **Hit Rate@10**: 0.0000 | **NDCG@10**: 0.0000
+Metrics are calculated at runtime from the selected dataset. The bundled sample is intentionally small and is useful for smoke tests, not for drawing conclusions about model quality. Use a larger Yelp dataset for meaningful comparisons.
 
 ---
 
 ## 🔬 Full Dataset Evaluation Workflow
 
-To run a statistically representative model comparison on a large subset or full release of the **Yelp Academic Dataset**:
+To evaluate on a larger subset or full release of the **Yelp Academic Dataset**:
 
 1. Download `yelp_academic_dataset_business.csv` and `yelp_academic_dataset_review.csv` from the official Yelp Open Dataset.
 2. Place both CSV files into the `data/raw/` directory:
@@ -152,7 +127,7 @@ To run a statistically representative model comparison on a large subset or full
    ```
 3. Execute the Full Dataset Evaluation script:
    ```bash
-   python -c "from src.evaluation import run_full_dataset_evaluation; stats, df = run_full_dataset_evaluation(min_interactions=5); print(stats); print(df)"
+    python -c "from src.evaluation import run_full_dataset_evaluation; stats, df = run_full_dataset_evaluation(min_interactions=5); print(stats); print(df)"
    ```
 
 ---
@@ -167,7 +142,7 @@ Travel-Recommendation-System/
 │   ├── processed/
 │   │   ├── yelp_sample_businesses.csv
 │   │   └── yelp_sample_reviews.csv
-│   └── user_feedback.csv           # Local feedback log (likes/dislikes)
+│   └── user_feedback.csv           # Created at runtime when feedback is submitted
 │
 ├── notebooks/
 │   ├── 01_EDA.ipynb                # Exploratory Data Analysis
@@ -194,31 +169,31 @@ Travel-Recommendation-System/
 ├── tests/
 │   └── test_recommender.py         # Automated pytest test suite
 │
-├── requirements.txt                # Pinned dependencies
+├── requirements.txt                # Minimum dependency versions
 ├── .gitignore                      # Git exclusion rules
 └── README.md                       # Documentation
 ```
 
 ---
 
-## 🚀 Quickstart & Installation
+## Quickstart
 
 ```bash
-# 1. Activate Environment (Windows)
+# Create and activate a virtual environment on Windows
+python -m venv .venv
 .venv\Scripts\activate
 
-# 2. Build Dataset & Run Test Suite
+# Install dependencies
+python -m pip install -r requirements.txt
+
+# Build the sample dataset and run tests
 python data/build_sample_dataset.py
 pytest tests/test_recommender.py
 
-# 3. Launch Streamlit App
+# Start the Streamlit app
 streamlit run app/app.py
 ```
 
 Open [http://localhost:8501](http://localhost:8501) in your browser.
 
----
-
-## 📄 License
-
-Distributed under the MIT License.
+The application loads the processed sample CSV files from `data/processed/` by default. If full Yelp business and review files are present in `data/raw/`, the preprocessing layer will use those files instead.
