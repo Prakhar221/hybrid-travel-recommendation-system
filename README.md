@@ -132,7 +132,7 @@ To evaluate on a larger subset or full release of the **Yelp Academic Dataset**:
 
 ---
 
-## 📂 Project Structure
+## 📂 Project Structure  
 
 ```
 Travel-Recommendation-System/
