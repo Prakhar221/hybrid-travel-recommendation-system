@@ -106,7 +106,6 @@ The recommendation system includes an evaluation pipeline to measure both predic
 - Hit Rate@K
 - NDCG@K
 
-
 The evaluation uses a user-wise train/test split. Businesses already present in a user's training data are excluded from the recommendation candidates.
 
 ### Sample Dataset
